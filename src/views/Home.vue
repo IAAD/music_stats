@@ -1,18 +1,32 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <Header />
+      <Tracks/>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
+import Header from "@/components/Header.vue";
+import Tracks from "@/components/Tracks.vue";
+import axios from 'axios'
 
 export default {
   name: "home",
   components: {
-    HelloWorld
+    Header,
+    Tracks
+  },
+  data() {
+    return {
+      tracks: []
+    };
+  },
+  tracks() {
+    axios
+      .get()
+      .then()
+      .catch();
   }
 };
 </script>
