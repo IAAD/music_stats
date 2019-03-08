@@ -1,7 +1,24 @@
 <template>
   <div class="home">
     <Header />
-      <Tracks/>
+
+    <div class="input-group md-form form-sm form-2 pl-0">
+      <input
+        class="form-control my-0 py-1 red-border"
+        v-model="search"
+        type="text"
+        placeholder="Search"
+        aria-label="Search"
+      />
+      <button class="input-group-append" v-on:click="searchResults">
+        Search
+        <span class="input-group-text red lighten-3" id="basic-text1"
+          ><i class="fas fa-search text-grey" aria-hidden="true"></i
+        ></span>
+      </button>
+    </div>
+
+    <Tracks v-bind:tracks="tracks" />
   </div>
 </template>
 
@@ -9,7 +26,7 @@
 // @ is an alias to /src
 import Header from "@/components/Header.vue";
 import Tracks from "@/components/Tracks.vue";
-import axios from 'axios'
+import axios from "axios";
 
 export default {
   name: "home",
@@ -19,29 +36,52 @@ export default {
   },
   data() {
     return {
-      tracks: []
+      tracks: [],
+      search: ""
     };
   },
-  mounted() {
-    const session_url = 'https://accounts.spotify.com/api/token';
-    const username = '88ab0ee5549d4d5282676a11604f2545';
-    const password = 'c96c13c6d3104b6299a4a7765d76f642';
-    const basicAuth = 'Basic ' + btoa(username + ':' + password);
-    const requestBody ={
-      grant_type: 'client_credentials'
+  methods: {
+    async searchResults() {
+      const url = "http://localhost:5000/api";
+      const response = await axios.post(url);
+      console.log(response);
+
+      const session_url = `http://localhost:5000/api/search/${this.search}/${
+        response.data
+      }`;
+      console.log(session_url);
+      const searchResult = await axios.get(session_url);
+      this.tracks = searchResult.data.tracks.items;
+      console.log(searchResult.data.tracks.items);
     }
-    const config = {
-      headers: {
-        'Content-Type':'application/x-www-form-urlencoded',
-        'Access-Control-Allow-Origin':'*',
-        'Authorization': basicAuth
-      }
-    }
-    axios.post(session_url, requestBody, config).then(function(response) {
-      console.log(response.data.access_token);
-    }).catch(function(err) {
-      console.log(err);
-    })
   }
 };
 </script>
+
+<style>
+@media (min-width: 0) {
+  .card-deck .card {
+    flex: 0 0 calc(100% - 30px);
+  }
+}
+@media (min-width: 576px) {
+  .card-deck .card {
+    flex: 0 0 calc(50% - 30px);
+  }
+}
+@media (min-width: 768px) {
+  .card-deck .card {
+    flex: 0 0 calc(33.3333333333% - 30px);
+  }
+}
+@media (min-width: 992px) {
+  .card-deck .card {
+    flex: 0 0 calc(25% - 30px);
+  }
+}
+@media (min-width: 1200px) {
+  .card-deck .card {
+    flex: 0 0 calc(20% - 30px);
+  }
+}
+</style>

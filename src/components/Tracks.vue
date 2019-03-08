@@ -2,38 +2,17 @@
     <div>
         <mdb-container>
             <mdb-row>
-                <mdb-card-group deck>
-                    <mdb-card>
+                <mdb-card-group>
+                    <mdb-card
+                    v-for="track in tracks"
+                    v-bind:key="track.id"
+                    >
                         <mdb-view hover>
-                            <mdb-card-image src="https://mdbootstrap.com/img/Photos/Others/images/16.jpg" alt="Card image cap"></mdb-card-image>
+                            <mdb-card-image :src=track.album.images[0].url alt="Card image cap"></mdb-card-image>
                             <mdb-mask flex-center waves overlay="white-slight"></mdb-mask>
                         </mdb-view>
                         <mdb-card-body>
-                            <mdb-card-title>Card title</mdb-card-title>
-                            <mdb-card-text>Some quick example text to build on the card title and make up the bulk of the
-                                card's content.</mdb-card-text>
-                            <mdb-btn color="primary">Read more</mdb-btn>
-                        </mdb-card-body>
-                    </mdb-card>
-                    <mdb-card>
-                        <mdb-view hover>
-                            <mdb-card-image src="https://mdbootstrap.com/img/Photos/Others/images/14.jpg" alt="Card image cap"></mdb-card-image>
-                            <mdb-mask flex-center waves overlay="white-slight"></mdb-mask>
-                        </mdb-view>
-                        <mdb-card-body>
-                            <mdb-card-title>Card title</mdb-card-title>
-                            <mdb-card-text>Some quick example text to build on the card title and make up the bulk of the
-                                card's content.</mdb-card-text>
-                            <mdb-btn color="primary">Read more</mdb-btn>
-                        </mdb-card-body>
-                    </mdb-card>
-                    <mdb-card>
-                        <mdb-view hover>
-                            <mdb-card-image src="https://mdbootstrap.com/img/Photos/Others/images/15.jpg" alt="Card image cap"></mdb-card-image>
-                            <mdb-mask flex-center waves overlay="white-slight"></mdb-mask>
-                        </mdb-view>
-                        <mdb-card-body>
-                            <mdb-card-title>Card title</mdb-card-title>
+                            <mdb-card-title>{{track.name}}</mdb-card-title>
                             <mdb-card-text>Some quick example text to build on the card title and make up the bulk of the
                                 card's content.</mdb-card-text>
                             <mdb-btn color="primary">Read more</mdb-btn>
@@ -59,10 +38,44 @@
             mdbCardGroup,
             mdbContainer,
             mdbRow
-        }
+        },
+        props:['tracks']
     }
 </script>
 
 <style scoped>
+    @media (min-width: 0) {
+        .card-group .card {
+            flex: 0 0 calc(100% - 40px);
+            margin: 15px 15px;
+        }
+    }
+    @media (min-width: 576px) {
+        .card-group .card {
+            flex: 0 0 calc(50% - 30px);
+            margin: 15px 15px;
+        }
+    }
+    @media (min-width: 768px) {
+        .card-group .card {
+            flex: 0 0 calc(50% - 30px);
+            margin: 15px 15px;
+        }
+    }
+    @media (min-width: 992px) {
+        .card-group .card {
+            flex: 0 0 calc(33.3333333333% - 30px);
+            margin: 15px 15px;
+        }
+    }
+    @media (min-width: 1200px) {
+        .card-group .card {
+            flex: 0 0 calc(25% - 30px);
+            margin: 15px 15px;
+        }
+    }
 
+    .card {
+        flex: 1;
+    }
 </style>

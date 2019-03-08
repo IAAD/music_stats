@@ -1,10 +1,15 @@
 <template>
-    
+    <TrackHeader/>
 </template>
 
 <script>
+    import TrackHeader from "../components/TrackHeader.vue"
+
     export default {
-        name: "Info"
+        name: "Info",
+        components:{
+            TrackHeader
+        }
     }
 </script>
 
