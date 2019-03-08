@@ -1,11 +1,50 @@
 <template>
-    
+    <mdb-container>
+        <mdb-row>
+            <mdb-col class="-align-center">
+    <mdb-jumbotron class="hoverable center-block">
+        <mdb-row>
+            <mdb-container>
+                <mdb-doughnut-chart :data="doughnutChartData" :options="doughnutChartOptions" :width="800" :height="300"></mdb-doughnut-chart>
+            </mdb-container>
+        </mdb-row>
+    </mdb-jumbotron>
+            </mdb-col>
+        </mdb-row>
+    </mdb-container>
 </template>
 
 <script>
+    import { mdbDoughnutChart, mdbContainer, mdbRow, mdbJumbotron, mdbCol } from 'mdbvue';
+
     export default {
-        name: "SoundFeatures"
-    }
+        name: 'SoundFeatures',
+        components: {
+            mdbDoughnutChart,
+            mdbContainer,
+            mdbJumbotron,
+            mdbRow,
+            mdbCol
+        },
+        data() {
+            return {
+                doughnutChartData: {
+                    labels: ["Red", "Green", "Yellow", "Grey", "Dark Grey"],
+                    datasets: [
+                        {
+                            data: [300, 50, 100, 40, 120],
+                            backgroundColor: ["#F7464A", "#46BFBD", "#FDB45C", "#949FB1", "#4D5360"],
+                            hoverBackgroundColor: ["#FF5A5E", "#5AD3D1", "#FFC870", "#A8B3C5", "#616774"]
+                        }
+                    ]
+                },
+                doughnutChartOptions: {
+                    responsive: false,
+                    maintainAspectRatio: false,
+                },
+            };
+        }
+    };
 </script>
 
 <style scoped>

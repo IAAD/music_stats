@@ -15,7 +15,7 @@
                             <mdb-card-title>{{track.name}}</mdb-card-title>
                             <mdb-card-text>Some quick example text to build on the card title and make up the bulk of the
                                 card's content.</mdb-card-text>
-                            <mdb-btn color="primary">Read more</mdb-btn>
+                            <mdb-btn color="primary" v-on:click="viewInfo(track.id)">View Track</mdb-btn>
                         </mdb-card-body>
                     </mdb-card>
                 </mdb-card-group>
@@ -39,7 +39,13 @@
             mdbContainer,
             mdbRow
         },
-        props:['tracks']
+        props:['tracks'],
+        methods:{
+            viewInfo(id){
+                console.log(id)
+            }
+        }
+
     }
 </script>
 
