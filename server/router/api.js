@@ -57,4 +57,50 @@ router.get("/search/:query/:token", async (req, res) => {
   });
 });
 
+router.get("/track/:id/:token", async (req, res) => {
+  var request = require("request"); // "Request" library
+
+  // your application requests authorization
+  var authOptions1 = {
+    url: `https://api.spotify.com/v1/tracks/${
+        req.params.id
+        }`,
+    headers: {
+      Authorization: "Bearer " + req.params.token
+    },
+    json: true
+  };
+
+  request.get(authOptions1, function(error, response, body) {
+    if (!error && response.statusCode === 200) {
+      // use the access token to access the Spotify Web API
+
+      res.send(body);
+    }
+  });
+});
+
+router.get("/artist/:id/:token", async (req, res) => {
+  var request = require("request"); // "Request" library
+
+  // your application requests authorization
+  var authOptions1 = {
+    url: `https://api.spotify.com/v1/artists/${
+        req.params.id
+        }`,
+    headers: {
+      Authorization: "Bearer " + req.params.token
+    },
+    json: true
+  };
+
+  request.get(authOptions1, function(error, response, body) {
+    if (!error && response.statusCode === 200) {
+      // use the access token to access the Spotify Web API
+
+      res.send(body);
+    }
+  });
+});
+
 module.exports = router;

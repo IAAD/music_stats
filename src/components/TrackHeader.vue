@@ -3,14 +3,15 @@
     <mdb-carousel :interval="4000" showIndicators>
       <mdb-carousel-item
         img
-        src="https://mdbootstrap.com/img/Photos/Slides/img%20(68).jpg"
+        src="http://www.mundialbeisbol2010.org/wp-content/uploads/2018/05/o-music-heart-facebook.jpg"
         mask="black-light"
         alt="First slide"
+        style="max-height: 500px"
       >
       </mdb-carousel-item>
       <mdb-carousel-item
         img
-        src="https://mdbootstrap.com/img/Photos/Slides/img%20(6).jpg"
+        src="https://wallpaper-gallery.net/images/best-music-wallpapers/best-music-wallpapers-17.jpg"
         mask="black-strong"
         alt="Second slide"
       >
@@ -28,15 +29,9 @@
 
         <mdb-mask waves overlay="white-slight"></mdb-mask>
         <mdb-card-body class="text-center" cascade>
-          <mdb-card-title><strong>My adventure</strong></mdb-card-title>
-          <h5 class="indigo-text"><strong>Photography</strong></h5>
-          <mdb-card-text
-            >Sed ut perspiciatis unde omnis iste natus sit voluptatem
-            accusantium doloremque laudantium, totam rem aperiam.</mdb-card-text
-          >
-          <a class="px-2 fa-lg li-ic"> <mdb-icon fab icon="linkedin"/></a>
-          <a class="px-2 fa-lg tw-ic"> <mdb-icon fab icon="twitter"/></a>
-          <a class="px-2 fa-lg fb-ic"> <mdb-icon fab icon="facebook"/></a>
+          <mdb-card-title><strong> {{trackhead.data.name}}</strong></mdb-card-title>
+          <h5 class="indigo-text"><strong>Album: </strong> {{trackhead.data.album.name}} </h5>
+          <a class="px-2 fa-lg li-ic" :href="trackhead.data.external_urls.spotify"> <mdb-icon fab icon="spotify"/></a>
         </mdb-card-body>
     </mdb-row>
       </mdb-container>
@@ -49,7 +44,6 @@ import {
   mdbRow,
   mdbCardBody,
   mdbCardTitle,
-  mdbCardText,
   mdbIcon,
   mdbCarousel,
   mdbCarouselItem,
@@ -63,12 +57,15 @@ export default {
     mdbRow,
     mdbCardBody,
     mdbCardTitle,
-    mdbCardText,
     mdbIcon,
     mdbCarousel,
     mdbCarouselItem,
     mdbMask,
     mdbContainer
+  },
+  props: ["trackhead"],
+  mounted() {
+    console.log(this.trackhead)
   }
 };
 </script>

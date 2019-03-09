@@ -4,7 +4,13 @@ import Vuex from "vuex";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state: {},
-  mutations: {},
+  state: {
+    trackId: ""
+  },
+  mutations: {
+    INSERT_ID: (state, id) => {
+      state.trackId = id;
+    }
+  },
   actions: {}
 });
