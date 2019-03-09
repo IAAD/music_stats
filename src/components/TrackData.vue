@@ -54,7 +54,7 @@
                         <mdb-view class="rounded z-depth-2 mb-lg-0 mb-4" hover>
                             <img
                                     class="img-fluid"
-                                    src="https://mdbootstrap.com/img/Photos/Others/img%20(27).jpg"
+                                    :src="artist.data.images[0].url"
                                     alt="Sample image"
                             />
                             <a>
@@ -62,26 +62,25 @@
                             </a>
                         </mdb-view>
                     </mdb-col>
-                    <mdb-col lg="8">
+                    <mdb-col lg="8" class="-align-left">
                         <a class="green-text">
-                            <h6 class="font-weight-bold mb-3">
-                                <mdb-icon icon="utensils" class="pr-2" />Food
-                            </h6>
+                            <h3 class="font-weight-bold mb-3">
+                                <mdb-icon icon="chart" class="pr-2" />{{artist.data.name}}
+                            </h3>
                         </a>
-                        <h3 class="font-weight-bold mb-3 p-0">
-                            <strong>Title of the news</strong>
-                        </h3>
-                        <p>
-                            Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil
-                            impedit quo minus id quod maxime placeat mdb-iconcere possimus, omnis
-                            voluptas assumenda est, omnis dolor repellendus et aut officiis
-                            debitis.
-                        </p>
-                        <p>
-                            by
-                            <a> <strong>Carine Fox</strong> </a>, 19/08/2018
-                        </p>
-                        <mdb-btn color="success" size="md" class="waves-light "
+                        <h5 class="mb-3 p-0">
+                            <strong class="font-weight-bold ">Artist Popularity : </strong> {{artist.data.popularity}}
+                        </h5>
+                        <h5 class=" mb-3 p-0">
+                            <strong class="font-weight-bold ">Followers: </strong> {{artist.data.followers.total}}
+                        </h5>
+                        <h5 class=" mb-3 p-0">
+                            <strong class="font-weight-bold">Genres: </strong>
+                            <span v-for="genre in artist.data.genres" v-bind:key="genre.index">
+                   {{genre}},
+              </span>
+                        </h5>
+                        <mdb-btn color="success" size="md" class="waves-light"
                         >Read more</mdb-btn
                         >
                     </mdb-col>
@@ -116,7 +115,7 @@ export default {
     mdbBtn,
       mdbJumbotron
   },
-    props:['trackhead'],
+    props:['trackhead', 'artist'],
     methods:{
       millisToMins(millis){
           let minutes = Math.floor(millis/60000);
@@ -124,10 +123,6 @@ export default {
           return minutes +":"+(seconds < 10 ? '0': '')+seconds;
       }
     },
-    mounted(){
-
-
-    }
 
 };
 </script>
