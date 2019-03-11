@@ -98,7 +98,7 @@ export default {
         },
         xaxis: {
           categories: [
-                  "svfs",   "svfs" ,  "svfs"  , "svfs",
+                  "svfs",   "svfs" ,  "sgdhe"  , "svfs",
             "svfs",   "svfs",   "svfs",   "svfs",   "svfs",   "tewutuwr"
           ]
         }
