@@ -85,7 +85,7 @@ export default {
   data() {
     return {
       series: [
-        6,66,6,6,6,6,6,523,3,3
+
       ],
       chartOptions: {
         plotOptions: {
@@ -99,7 +99,7 @@ export default {
         xaxis: {
           categories: [
                   "svfs",   "svfs" ,  "svfs"  , "svfs",
-            "svfs",   "svfs",   "svfs",   "svfs",   "svfs",   "svfs"
+            "svfs",   "svfs",   "svfs",   "svfs",   "svfs",   "tewutuwr"
           ]
         }
       },
