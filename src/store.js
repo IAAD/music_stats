@@ -5,11 +5,15 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    trackId: ""
+    trackId: "",
+    countryData: []
   },
   mutations: {
     INSERT_ID: (state, id) => {
       state.trackId = id;
+    },
+    CHANGE_DATA: (state, data) => {
+      state.countryData = data;
     }
   },
   actions: {}

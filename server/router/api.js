@@ -131,7 +131,7 @@ router.get("/features/:id/:token", async (req, res) => {
 
   // your application requests authorization
   var authOptions1 = {
-    url: `https://api.spotify.com/v1/artists/${
+    url: `https://api.spotify.com/v1/audio-features/${
         req.params.id
         }`,
     headers: {
@@ -149,14 +149,12 @@ router.get("/features/:id/:token", async (req, res) => {
   });
 });
 
-router.get("/album/:id/:token", async (req, res) => {
+router.get("/toptracks/:id/:token/:country", async (req, res) => {
   var request = require("request"); // "Request" library
 
   // your application requests authorization
   var authOptions1 = {
-    url: `https://api.spotify.com/v1/artists/${
-        req.params.id
-        }`,
+    url: `https://api.spotify.com/v1/artists/${req.params.id}/top-tracks?country=${req.params.country}`,
     headers: {
       Authorization: "Bearer " + req.params.token
     },
@@ -166,8 +164,8 @@ router.get("/album/:id/:token", async (req, res) => {
   request.get(authOptions1, function(error, response, body) {
     if (!error && response.statusCode === 200) {
       // use the access token to access the Spotify Web API
-
       res.send(body);
+
     }
   });
 });

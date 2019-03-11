@@ -1,81 +1,76 @@
 <template>
+  <mdb-row>
     <mdb-container>
-        <mdb-row>
-            <mdb-col class="-align-center">
-    <mdb-jumbotron class="hoverable center-block">
-        <mdb-row>
-            <mdb-container>
-                <mdb-bar-chart :data="barChartData" :options="barChartOptions" :width="600" :height="300"></mdb-bar-chart>
-            </mdb-container>
-        </mdb-row>
-    </mdb-jumbotron>
-            </mdb-col>
-        </mdb-row>
+      <div id="chart">
+        <apexchart
+          type="bar"
+          height="350"
+          :options="chartOptions"
+          :series="series"
+        />
+      </div>
     </mdb-container>
+  </mdb-row>
 </template>
 
 <script>
-    import { mdbBarChart, mdbContainer, mdbRow, mdbJumbotron, mdbCol } from 'mdbvue';
+import { mdbContainer, mdbRow } from "mdbvue";
+import VueApexCharts from 'vue-apexcharts';
+import { mapState } from "vuex";
 
-    export default {
-        name: 'TopTracks',
-        components: {
-            mdbBarChart,
-            mdbContainer,
-            mdbJumbotron,
-            mdbRow,
-            mdbCol
-        },
-        data() {
-            return {
-                barChartData: {
-                    labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-                    datasets: [{
-                        label: '# of Votes',
-                        data: [12, 19, 3, 5, 2, 3],
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
-                            'rgba(255, 206, 86, 0.2)',
-                            'rgba(75, 192, 192, 0.2)',
-                            'rgba(153, 102, 255, 0.2)',
-                            'rgba(255, 159, 64, 0.2)'
-                        ],
-                        borderColor: [
-                            'rgba(255,99,132,1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 206, 86, 1)',
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(153, 102, 255, 1)',
-                            'rgba(255, 159, 64, 1)'
-                        ],
-                        borderWidth: 1,
-                    }]
-                },
-                barChartOptions: {
-                    responsive: false,
-                    maintainAspectRatio: false,
-                    scales: {
-                        xAxes: [{
-                            barPercentage: 1,
-                            gridLines: {
-                                display: true,
-                                color: "rgba(0, 0, 0, 0.1)",
-                            }
-                        }],
-                        yAxes: [{
-                            gridLines: {
-                                display: true,
-                                color: "rgba(0, 0, 0, 0.1)",
-                            }
-                        }],
-                    }
-                }
-            };
+export default {
+  name: "TopTracks",
+  components: {
+    mdbContainer,
+    mdbRow,
+    apexchart: VueApexCharts
+  },
+  computed: {
+    ...mapState(["countryData"]),
+    updateData: function () {
+      console.log('just me');
+      const chartData = []
+      this.countryData.data.tracks.map ( (track)=>{
+        chartData.push(track.popularity)
+      });
+      this.series.data = chartData;
+      return this.series.data;
+    }
+  },
+  data: function() {
+    return {
+      series: [
+        {
+          data: this.updateData()
         }
+      ],
+      chartOptions: {
+        plotOptions: {
+          bar: {
+            vertical: true
+          }
+        },
+        dataLabels: {
+          enabled: false
+        },
+        xaxis: {
+          categories: [
+            this.countryData.data.tracks[0].name.toString(),
+            this.countryData.data.tracks[1].name.toString(),
+            this.countryData.data.tracks[2].name.toString(),
+            this.countryData.data.tracks[3].name.toString(),
+            this.countryData.data.tracks[4].name.toString(),
+            this.countryData.data.tracks[5].name.toString(),
+            this.countryData.data.tracks[6].name.toString(),
+            this.countryData.data.tracks[7].name.toString(),
+            this.countryData.data.tracks[8].name.toString(),
+            this.countryData.data.tracks[9].name.toString()
+          ]
+        }
+      }
     };
+  }
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
