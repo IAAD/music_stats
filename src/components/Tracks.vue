@@ -92,12 +92,8 @@ export default {
           console.log(track.name);
           trackArr.push(track.name.substring(0, 5));
       });
-      // const arr = countryResult;
-      // arr.forEach(track => {
-      //   trackArr.push(track.name.substring(0, 5));
-      // });
+
       this.catData = trackArr;
-      console.log(this.catData)
       this.CHART_CAT(trackArr);
 
       return true;
