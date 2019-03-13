@@ -78,31 +78,31 @@ export default {
               'CHART_CAT'
       ]),
     viewInfo: async function(id, artistId) {
-      // this.track = id;
-      // this.INSERT_ID(this.track);
-      // this.ARTIST_ID(artistId);
-      // const countryCode = "US";
-      // const trackArr = [];
-      // const countryData_url = `http://localhost:5000/api/toptracks/${this.artistId}/
-      // ${this.bearerId}/${countryCode}`;
-      //
-      // const countryResult = await axios.get(countryData_url);
-      // this.CHANGE_DATA(countryResult);
-      // countryResult.data.tracks.forEach(track => {
-      //     console.log(track.name);
-      //     trackArr.push(track.name.substring(0, 5));
-      // });
-      //
-      // this.catData = trackArr;
-      // this.CHART_CAT(trackArr);
-      //
-      // return true;
+      this.track = id;
+      this.INSERT_ID(this.track);
+      this.ARTIST_ID(artistId);
+      const countryCode = "US";
+      const trackArr = [];
+      const countryData_url = `http://localhost:5000/api/toptracks/${this.artistId}/
+      ${this.bearerId}/${countryCode}`;
+
+      const countryResult = await axios.get(countryData_url);
+      this.CHANGE_DATA(countryResult);
+      countryResult.data.tracks.forEach(track => {
+          console.log(track.name);
+          trackArr.push(track.name.substring(0, 5));
+      });
+
+      this.catData = trackArr;
+      this.CHART_CAT(trackArr);
+
+      return true;
     },
     beforeviewInfo: async function (id, artistId) {
-      // const view = await this.viewInfo(id, artistId);
-      // if(view == true){
-      //   this.$router.push('/info');
-      // }
+      const view = await this.viewInfo(id, artistId);
+      if(view == true){
+        this.$router.push('/info');
+      }
     }
   }
 };
