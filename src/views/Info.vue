@@ -124,7 +124,6 @@ export default {
   mounted() {
     this.trackResults(this.trackId);
     this.setData();
-    console.log(this.catData)
   },
 
   methods: {
@@ -163,7 +162,6 @@ export default {
 
       const countryResult = await axios.get(countryData_url);
       this.countryDataProp = countryResult;
-      console.log(this.countryData.data.tracks);
       this.countryData.data.tracks.forEach(track => {
         this.chartData.push(track.popularity);
         this.trackName.push(track.name);

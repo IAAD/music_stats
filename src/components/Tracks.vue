@@ -18,8 +18,11 @@
                 the bulk of the card's content.</mdb-card-text
               >
 
-                <mdb-btn color="primary" v-on:click="beforeviewInfo(track.id, track.artists[0].id)"
-                  >View Track</mdb-btn>
+              <mdb-btn
+                color="primary"
+                v-on:click="beforeviewInfo(track.id, track.artists[0].id)"
+                >View Track</mdb-btn
+              >
             </mdb-card-body>
           </mdb-card>
         </mdb-card-group>
@@ -40,9 +43,9 @@ import {
   mdbCardGroup,
   mdbContainer
 } from "mdbvue";
-import axios from 'axios';
+import axios from "axios";
 
-import { mapState, mapMutations } from 'vuex'
+import { mapState, mapMutations } from "vuex";
 export default {
   name: "Tracks",
   components: {
@@ -56,41 +59,33 @@ export default {
     mdbContainer,
     mdbRow
   },
-    computed:{
-        ...mapState([
-            'trackId',
-          'artistId',
-                'bearerId'
-        ])
-    },
-    data() {
-      return{
-          track: '',
-        catData: []
-      }
-    },
+  computed: {
+    ...mapState(["trackId", "artistId", "bearerId"])
+  },
+  data() {
+    return {
+      track: "",
+      catData: []
+    };
+  },
   props: ["tracks"],
   methods: {
-      ...mapMutations([
-          'INSERT_ID',
-        'ARTIST_ID',
-              'CHANGE_DATA',
-              'CHART_CAT'
-      ]),
+    ...mapMutations(["INSERT_ID", "ARTIST_ID", "CHANGE_DATA", "CHART_CAT"]),
     viewInfo: async function(id, artistId) {
       this.track = id;
       this.INSERT_ID(this.track);
       this.ARTIST_ID(artistId);
       const countryCode = "US";
       const trackArr = [];
-      const countryData_url = `http://localhost:5000/api/toptracks/${this.artistId}/
+      const countryData_url = `http://localhost:5000/api/toptracks/${
+        this.artistId
+      }/
       ${this.bearerId}/${countryCode}`;
 
       const countryResult = await axios.get(countryData_url);
       this.CHANGE_DATA(countryResult);
       countryResult.data.tracks.forEach(track => {
-          console.log(track.name);
-          trackArr.push(track.name.substring(0, 5));
+        trackArr.push(track.name.substring(0, 5));
       });
 
       this.catData = trackArr;
@@ -98,10 +93,10 @@ export default {
 
       return true;
     },
-    beforeviewInfo: async function (id, artistId) {
+    beforeviewInfo: async function(id, artistId) {
       const view = await this.viewInfo(id, artistId);
-      if(view == true){
-        this.$router.push('/info');
+      if (view === true) {
+        this.$router.push("/info");
       }
     }
   }

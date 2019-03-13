@@ -28,7 +28,6 @@ export default {
   computed: {
     ...mapState(["countryData"]),
     updateData: function () {
-      console.log('just me');
       const chartData = []
       this.countryData.data.tracks.map ( (track)=>{
         chartData.push(track.popularity)
