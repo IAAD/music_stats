@@ -27,12 +27,16 @@
 import Header from "@/components/Header.vue";
 import Tracks from "@/components/Tracks.vue";
 import axios from "axios";
+import { mapState, mapMutations } from "vuex";
 
 export default {
   name: "home",
   components: {
     Header,
     Tracks
+  },
+  computed: {
+    ...mapState(["bearerId"])
   },
   data() {
     return {
@@ -41,6 +45,7 @@ export default {
     };
   },
   methods: {
+    ...mapMutations(["BEARER_ID"]),
     async searchResults() {
       const url = "http://localhost:5000/api";
       const response = await axios.post(url);
@@ -49,6 +54,7 @@ export default {
       const session_url = `http://localhost:5000/api/search/${this.search}/${
         response.data
       }`;
+      this.BEARER_ID(response.data);
       console.log(session_url);
       const searchResult = await axios.get(session_url);
       this.tracks = searchResult.data.tracks.items;

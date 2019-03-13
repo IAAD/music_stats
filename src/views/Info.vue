@@ -2,14 +2,17 @@
   <div>
     <TrackHeader v-bind:trackhead="trackhead" />
     <div style="margin-top: 5rem"></div>
-    <TrackData  v-bind:trackhead="trackhead" v-bind:artist="artist"   />
+    <TrackData v-bind:trackhead="trackhead" v-bind:artist="artist" />
     <div style="margin-top: 5rem"></div>
     <mdb-container>
       <mdb-row>
         <mdb-col class="-align-center">
           <mdb-jumbotron class="hoverable center-block">
             <mdb-row>
-              <select class="browser-default custom-select" v-on:change="selectCountry($event)">
+              <select
+                class="browser-default custom-select"
+                v-on:change="selectCountry($event)"
+              >
                 <option disabled value="">Please select a Country</option>
                 <option value="AR">Argentina</option>
                 <option value="AU">Australia</option>
@@ -33,7 +36,7 @@
                 <option value="NL">Netherlands</option>
                 <option value="PL">Poland</option>
                 <option value="SG">Singapore</option>
-                <option value="US" selected >United States</option>
+                <option value="US" selected>United States</option>
                 <option value="UY">Uruguay</option>
               </select>
             </mdb-row>
@@ -41,10 +44,10 @@
               <mdb-container>
                 <div id="chart">
                   <apexchart
-                          type="bar"
-                          height="350"
-                          :options="chartOptions"
-                          :series="series"
+                    type="bar"
+                    height="350"
+                    :options="chartOptions"
+                    :series="series"
                   />
                 </div>
               </mdb-container>
@@ -63,9 +66,9 @@ import TrackHeader from "../components/TrackHeader.vue";
 import TrackData from "../components/TrackData.vue";
 import SoundFeatures from "../components/SoundFeatures.vue";
 import { mapState, mapMutations } from "vuex";
-import { mdbJumbotron, mdbRow, mdbContainer, mdbCol } from 'mdbvue'
+import { mdbJumbotron, mdbRow, mdbContainer, mdbCol } from "mdbvue";
 import axios from "axios";
-import VueApexCharts from 'vue-apexcharts';
+import VueApexCharts from "vue-apexcharts";
 
 export default {
   name: "Info",
@@ -79,13 +82,22 @@ export default {
     mdbRow,
     apexchart: VueApexCharts
   },
+  props: ["catData"],
   computed: {
-    ...mapState(["trackId", "countryData"])
+    ...mapState([
+      "trackId",
+      "artistId",
+      "bearerId",
+      "countryData",
+      "chartCategories"
+    ])
   },
   data() {
     return {
       series: [
-
+        {
+          data: []
+        }
       ],
       chartOptions: {
         plotOptions: {
@@ -97,10 +109,7 @@ export default {
           enabled: false
         },
         xaxis: {
-          categories: [
-                  "svfs",   "svfs" ,  "sgdhe"  , "svfs",
-            "svfs",   "svfs",   "svfs",   "svfs",   "svfs",   "tewutuwr"
-          ]
+          categories: this.$store.state.chartCategories
         }
       },
       trackhead: [],
@@ -108,17 +117,18 @@ export default {
       features: [],
       bearerToken: "",
       countryDataProp: [],
-      chartData: []
+      chartData: [],
+      trackName: []
     };
   },
   mounted() {
     this.trackResults(this.trackId);
-    this.selectCountryFirst("US");
+    this.setData();
+    console.log(this.catData)
   },
+
   methods: {
-    ...mapMutations([
-      'CHANGE_DATA'
-    ]),
+    ...mapMutations(["CHANGE_DATA", "CHART_CAT"]),
     async trackResults(id) {
       //get bearer tokken
 
@@ -127,30 +137,37 @@ export default {
       const token = response.data;
       this.bearerToken = token;
 
-      const session_url = `http://localhost:5000/api/track/${id}/${
-        token
-      }`;
+      const session_url = `http://localhost:5000/api/track/${id}/${token}`;
 
       const trackResult = await axios.get(session_url);
       this.trackhead = trackResult;
 
       //get artist data
       const artistId = trackResult.data.artists[0].id;
-      const artist_url = `http://localhost:5000/api/artist/${artistId}/${
-              token
-              }`;
+      const artist_url = `http://localhost:5000/api/artist/${artistId}/${token}`;
 
       const artistResult = await axios.get(artist_url);
-      this.artist =  artistResult;
-
+      this.artist = artistResult;
 
       //get track features
-      const features_url = `http://localhost:5000/api/features/${id}/${
-              token
-              }`;
+      const features_url = `http://localhost:5000/api/features/${id}/${token}`;
 
       const featuresResult = await axios.get(features_url);
       this.features = featuresResult;
+
+      //get charts data
+      //get artist country data
+      const countryCode = "US";
+      const countryData_url = `http://localhost:5000/api/toptracks/${artistId}/
+      ${this.bearerToken}/${countryCode}`;
+
+      const countryResult = await axios.get(countryData_url);
+      this.countryDataProp = countryResult;
+      console.log(this.countryData.data.tracks);
+      this.countryData.data.tracks.forEach(track => {
+        this.chartData.push(track.popularity);
+        this.trackName.push(track.name);
+      });
     },
 
     async selectCountry(event) {
@@ -162,29 +179,20 @@ export default {
       const countryResult = await axios.get(artist_url);
       this.countryDataProp = countryResult;
       this.CHANGE_DATA(this.countryDataProp);
-      console.log(countryResult);
-      this.updateData()
-
+      this.updateData();
     },
 
-    async selectCountryFirst(event) {
-      //get artist country data
-      const artistId = this.trackhead.data.artists[0].id;
-      const artist_url = `http://localhost:5000/api/toptracks/${artistId}/
-      ${this.bearerToken}/${event}`;
-
-      const countryResult = await axios.get(artist_url);
-      this.countryDataProp = countryResult;
-      this.CHANGE_DATA(this.countryDataProp);
-      console.log(countryResult);
-    },
-    updateData: function () {
-      this.chartData = []
-      this.countryData.data.tracks.map ( (track)=>{
-        this.chartData.push(track.popularity)
-        console.log(track.popularity)
+    updateData: function() {
+      this.chartData = [];
+      this.countryData.data.tracks.forEach(track => {
+        this.chartData.push(track.popularity);
       });
-      this.series = this.chartData;
+      this.series[0].data = this.chartData;
+      this.chartOptions.xaxis.categories = this.trackName;
+    },
+
+    setData: function() {
+      this.series[0].data = this.chartData;
     }
   }
 };

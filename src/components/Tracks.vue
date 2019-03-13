@@ -17,11 +17,9 @@
                 >Some quick example text to build on the card title and make up
                 the bulk of the card's content.</mdb-card-text
               >
-              <router-link to="/info"
-                ><mdb-btn color="primary" v-on:click="viewInfo(track.id)"
-                  >View Track</mdb-btn
-                >
-              </router-link>
+
+                <mdb-btn color="primary" v-on:click="beforeviewInfo(track.id, track.artists[0].id)"
+                  >View Track</mdb-btn>
             </mdb-card-body>
           </mdb-card>
         </mdb-card-group>
@@ -42,8 +40,9 @@ import {
   mdbCardGroup,
   mdbContainer
 } from "mdbvue";
+import axios from 'axios';
 
-import {mapState, mapMutations} from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 export default {
   name: "Tracks",
   components: {
@@ -59,25 +58,55 @@ export default {
   },
     computed:{
         ...mapState([
-            'trackId'
+            'trackId',
+          'artistId',
+                'bearerId'
         ])
     },
     data() {
       return{
-          track: ''
+          track: '',
+        catData: []
       }
     },
   props: ["tracks"],
   methods: {
       ...mapMutations([
-          'INSERT_ID'
+          'INSERT_ID',
+        'ARTIST_ID',
+              'CHANGE_DATA',
+              'CHART_CAT'
       ]),
+    viewInfo: async function(id, artistId) {
+      this.track = id;
+      this.INSERT_ID(this.track);
+      this.ARTIST_ID(artistId);
+      const countryCode = "US";
+      const trackArr = [];
+      const countryData_url = `http://localhost:5000/api/toptracks/${this.artistId}/
+      ${this.bearerId}/${countryCode}`;
 
-    viewInfo: function(id) {
-          this.track = id;
-        this.INSERT_ID(this.track);
-        this.track = '';
-      console.log(id);
+      const countryResult = await axios.get(countryData_url);
+      this.CHANGE_DATA(countryResult);
+      countryResult.data.tracks.forEach(track => {
+          console.log(track.name);
+          trackArr.push(track.name.substring(0, 5));
+      });
+      // const arr = countryResult;
+      // arr.forEach(track => {
+      //   trackArr.push(track.name.substring(0, 5));
+      // });
+      this.catData = trackArr;
+      console.log(this.catData)
+      this.CHART_CAT(trackArr);
+
+      return true;
+    },
+    beforeviewInfo: async function (id, artistId) {
+      const view = await this.viewInfo(id, artistId);
+      if(view == true){
+        this.$router.push('/info');
+      }
     }
   }
 };
