@@ -1,3 +1,4 @@
+
 <template>
   <div>
     <mdb-container>
@@ -20,7 +21,7 @@
 
               <mdb-btn
                 color="primary"
-                v-on:click="beforeviewInfo(track.id, track.artists[0].id)"
+                v-on:click="beforeviewInfo(track.id, track.artists[0].id, track.album.id)"
                 >View Track</mdb-btn
               >
             </mdb-card-body>
@@ -70,8 +71,15 @@ export default {
   },
   props: ["tracks"],
   methods: {
-    ...mapMutations(["INSERT_ID", "ARTIST_ID", "CHANGE_DATA", "CHART_CAT"]),
-    viewInfo: async function(id, artistId) {
+    ...mapMutations([
+      "INSERT_ID",
+      "ARTIST_ID",
+      "CHANGE_DATA",
+      "CHART_CAT",
+      "PIE_DATA",
+      "ALBUM_DATA"
+    ]),
+    viewInfo: async function(id, artistId, albumId) {
       this.track = id;
       this.INSERT_ID(this.track);
       this.ARTIST_ID(artistId);
@@ -82,6 +90,7 @@ export default {
       }/
       ${this.bearerId}/${countryCode}`;
 
+
       const countryResult = await axios.get(countryData_url);
       this.CHANGE_DATA(countryResult);
       countryResult.data.tracks.forEach(track => {
@@ -91,10 +100,24 @@ export default {
       this.catData = trackArr;
       this.CHART_CAT(trackArr);
 
+      //get track features
+      const features_url = `http://localhost:5000/api/features/${id}/${this.bearerId}`;
+
+      const featuresResult = await axios.get(features_url);
+      this.PIE_DATA(featuresResult);
+
+      //get album details
+      const album_url = `http://localhost:5000/api/album/${albumId}/${
+        this.bearerId
+      }`;
+
+      const albumResult = await axios.get(album_url);
+      this.ALBUM_DATA(albumResult);
+
       return true;
     },
-    beforeviewInfo: async function(id, artistId) {
-      const view = await this.viewInfo(id, artistId);
+    beforeviewInfo: async function(id, artistId, albumId) {
+      const view = await this.viewInfo(id, artistId, albumId);
       if (view === true) {
         this.$router.push("/info");
       }

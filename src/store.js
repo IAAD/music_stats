@@ -9,7 +9,9 @@ export default new Vuex.Store({
     artistId: "",
     bearerId: "",
     countryData: [],
-    chartCategories: []
+    chartCategories: [],
+    features: [],
+    album: []
   },
   mutations: {
     INSERT_ID: (state, id) => {
@@ -26,6 +28,12 @@ export default new Vuex.Store({
     },
     CHART_CAT: (state, data) => {
       state.chartCategories = data;
+    },
+    PIE_DATA: (state, data) => {
+      state.features = data;
+    },
+    ALBUM_DATA: (state, data) => {
+      state.album = data;
     }
   },
   actions: {}

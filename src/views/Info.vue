@@ -57,7 +57,7 @@
       </mdb-row>
     </mdb-container>
     <div style="margin-top: 5rem"></div>
-    <SoundFeatures v-bind:features="features" />
+    <SoundFeatures />
   </div>
 </template>
 
@@ -114,14 +114,13 @@ export default {
       },
       trackhead: [],
       artist: [],
-      features: [],
       bearerToken: "",
       countryDataProp: [],
       chartData: [],
       trackName: []
     };
   },
-  mounted() {
+  created() {
     this.trackResults(this.trackId);
     this.setData();
   },
@@ -148,11 +147,7 @@ export default {
       const artistResult = await axios.get(artist_url);
       this.artist = artistResult;
 
-      //get track features
-      const features_url = `http://localhost:5000/api/features/${id}/${token}`;
-
-      const featuresResult = await axios.get(features_url);
-      this.features = featuresResult;
+ 
 
       //get charts data
       //get artist country data

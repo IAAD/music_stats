@@ -149,6 +149,26 @@ router.get("/features/:id/:token", async (req, res) => {
   });
 });
 
+router.get("/album/:id/:token", async (req, res) => {
+  var request = require("request"); // "Request" library
+
+  // your application requests authorization
+  var authOptions1 = {
+    url: `https://api.spotify.com/v1/albums/${req.params.id}/tracks`,
+    headers: {
+      Authorization: "Bearer " + req.params.token
+    },
+    json: true
+  };
+
+  request.get(authOptions1, function(error, response, body) {
+    if (!error && response.statusCode === 200) {
+      // use the access token to access the Spotify Web API
+      res.send(body);
+    }
+  });
+});
+
 router.get("/toptracks/:id/:token/:country", async (req, res) => {
   var request = require("request"); // "Request" library
 

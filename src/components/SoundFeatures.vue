@@ -3,20 +3,31 @@
     <mdb-row>
       <mdb-col lg="6">
         <mdb-jumbotron class="hoverable">
-          <mdb-row>
+          <mdb-container>
+          <mdb-row v-for="albumData in album.data.items" v-bind:key="albumData.id">
+            <mdb-jumbotron class="album">
+              <h5>{{albumData.name}}</h5>
+            </mdb-jumbotron>
           </mdb-row>
+          </mdb-container>
         </mdb-jumbotron>
       </mdb-col>
       <mdb-col lg="6" class="-align-center">
         <mdb-jumbotron class="hoverable center-block">
           <mdb-row>
             <mdb-container>
-              <mdb-doughnut-chart
-                :data="doughnutChartData"
-                :options="doughnutChartOptions"
-                :width="400"
-                :height="300"
-              ></mdb-doughnut-chart>
+              <div id="app">
+                <div class="chart-wrap">
+                  <div id="chart">
+                    <apexchart
+                      type="donut"
+                      width="380"
+                      :options="chartOptions"
+                      :series="series"
+                    />
+                  </div>
+                </div>
+              </div>
             </mdb-container>
           </mdb-row>
         </mdb-jumbotron>
@@ -26,27 +37,37 @@
 </template>
 
 <script>
-import {
-  mdbDoughnutChart,
-  mdbContainer,
-  mdbRow,
-  mdbJumbotron,
-  mdbCol
-} from "mdbvue";
+import { mdbContainer, mdbRow, mdbJumbotron, mdbCol } from "mdbvue";
+import VueApexCharts from "vue-apexcharts";
+import { mapState } from "vuex";
 
 export default {
   name: "SoundFeatures",
   components: {
-    mdbDoughnutChart,
     mdbContainer,
     mdbJumbotron,
     mdbRow,
-    mdbCol
+    mdbCol,
+    apexchart: VueApexCharts
   },
-  props: ["features"],
-  data() {
+  computed: {
+    ...mapState(["features", "album"])
+  },
+  data: function() {
     return {
-      doughnutChartData: {
+      series: [
+        parseFloat(this.$store.state.features.data.acousticness),
+        parseFloat(this.$store.state.features.data.danceability),
+        parseFloat(this.$store.state.features.data.energy),
+        parseFloat(this.$store.state.features.data.instrumentalness),
+        parseFloat(this.$store.state.features.data.liveness),
+        parseFloat(this.$store.state.features.data.speechiness),
+        parseFloat(this.$store.state.features.data.valence)
+      ],
+      chartOptions: {
+        dataLabels: {
+          enabled: false
+        },
         labels: [
           "Acousticness",
           "Danceability",
@@ -56,48 +77,41 @@ export default {
           "Speechiness",
           "Valence"
         ],
-        datasets: [
+
+        responsive: [
           {
-            data: [
-              parseFloat(this.features.data.acousticness),
-              parseFloat(this.features.data.danceability),
-              parseFloat(this.features.data.energy),
-              parseFloat(this.features.data.instrumentalness),
-              parseFloat(this.features.data.liveness),
-              parseFloat(this.features.data.speechiness),
-              parseFloat(this.features.data.valence)
-            ],
-            backgroundColor: [
-              "#F7464A",
-              "#46BFBD",
-              "#FDB45C",
-              "#949FB1",
-              "#4D5360",
-              "#bf2424",
-              "#bf2ebb",
-              "#3608bf"
-            ],
-            hoverBackgroundColor: [
-              "#FF5A5E",
-              "#5AD3D1",
-              "#FFC870",
-              "#A8B3C5",
-              "#616774",
-              "#bf2424",
-              "#bf2ebb",
-              "#3608bf"
-            ]
+            breakpoint: 480,
+            options: {
+              chart: {
+                width: 200
+              },
+              legend: {
+                show: false
+              }
+            }
           }
-        ]
-      },
-      doughnutChartOptions: {
-        responsive: false,
-        maintainAspectRatio: false
+        ],
+        legend: {
+          position: "right",
+          offsetY: 0,
+          height: 230
+        }
       }
     };
+  },
+  mounted() {
+    console.log(this.album)
   }
-
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+  .album{
+    padding-top: 10px;
+    padding-bottom: 5px;
+    margin-bottom: 7px;
+    margin-top: 7px;
+    width: 100%;
+    text-align: left;
+  }
+</style>
