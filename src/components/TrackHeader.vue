@@ -29,8 +29,16 @@
 
         <mdb-mask waves overlay="white-slight"></mdb-mask>
         <mdb-card-body class="text-center" cascade>
-          <mdb-card-title><strong> {{trackhead.data.name}}</strong></mdb-card-title>
-          <h5 class="indigo-text"><strong>Album: </strong> {{trackhead.data.album.name}} </h5>
+          <mdb-card-title><strong class="indigo-text"> {{trackhead.data.name}}</strong></mdb-card-title>
+          <h5 ><strong>Album: </strong> {{trackhead.data.album.name}} </h5>
+          <h5 ><strong>Album Artists: </strong>
+            <span v-for="artist in trackhead.data.album.artists" v-bind:key="artist.index">
+                   {{artist.name}},
+              </span>
+          </h5>
+          <h5><strong>Release Date: </strong> {{trackhead.data.album.release_date}} </h5>
+          <h5 ><strong>Album Markets: </strong> {{trackhead.data.album.available_markets.length}} </h5>
+          <h5 ><strong>Total Tracks: </strong> {{trackhead.data.album.total_tracks}} </h5>
           <a class="px-2 fa-lg li-ic" :href="trackhead.data.external_urls.spotify"> <mdb-icon fab icon="spotify"/></a>
         </mdb-card-body>
     </mdb-row>
@@ -64,7 +72,7 @@ export default {
     mdbContainer
   },
   props: ["trackhead"],
-  mounted() {
+  created() {
     console.log(this.trackhead)
   }
 };

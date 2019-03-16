@@ -1,6 +1,6 @@
 <template>
   <div>
-    <TrackHeader v-bind:trackhead="trackhead" />
+    <TrackHeader v-bind:artist="artist" v-bind:trackhead="trackhead" />
     <div style="margin-top: 5rem"></div>
     <TrackData v-bind:trackhead="trackhead" v-bind:artist="artist" />
     <div style="margin-top: 5rem"></div>
