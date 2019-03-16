@@ -1,7 +1,14 @@
 <template>
   <div>
     <TrackHeader v-bind:artist="artist" v-bind:trackhead="trackhead" />
-    <div style="margin-top: 5rem"></div>
+    <div style="margin-top: 2rem"></div>
+    <div class="pull-left align-left" style="width: 100%">
+      <mdb-btn color="success" size="lg"  style="float: left; margin-left: 6%" class=" -align-left pull-left" lg="2">
+        Back
+      </mdb-btn>
+    </div>
+    <div style="margin-top: 7rem"></div>
+
     <TrackData v-bind:trackhead="trackhead" v-bind:artist="artist" />
     <div style="margin-top: 5rem"></div>
     <mdb-container>
@@ -66,7 +73,7 @@ import TrackHeader from "../components/TrackHeader.vue";
 import TrackData from "../components/TrackData.vue";
 import SoundFeatures from "../components/SoundFeatures.vue";
 import { mapState, mapMutations } from "vuex";
-import { mdbJumbotron, mdbRow, mdbContainer, mdbCol } from "mdbvue";
+import { mdbJumbotron, mdbRow, mdbContainer, mdbCol, mdbBtn } from "mdbvue";
 import axios from "axios";
 import VueApexCharts from "vue-apexcharts";
 
@@ -80,6 +87,7 @@ export default {
     mdbCol,
     mdbJumbotron,
     mdbRow,
+    mdbBtn,
     apexchart: VueApexCharts
   },
   props: ["catData"],
