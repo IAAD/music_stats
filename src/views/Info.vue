@@ -146,9 +146,6 @@ export default {
 
       const artistResult = await axios.get(artist_url);
       this.artist = artistResult;
-
- 
-
       //get charts data
       //get artist country data
       const countryCode = "US";

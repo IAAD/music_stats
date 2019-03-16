@@ -7,19 +7,25 @@
         class="form-control my-0 py-1 red-border"
         v-model="search"
         type="text"
-        placeholder="Search"
+        placeholder="Search for any track or artist, try sia"
         aria-label="Search"
       />
-      <button class="input-group-append" v-on:click="searchResults">
+      <button
+        class="input-group-append btn btn-primary"
+        v-on:click="searchResults"
+      >
         Search
-        <span class="input-group-text red lighten-3" id="basic-text1"
-          ><i class="fas fa-search text-grey" aria-hidden="true"></i
-        ></span>
+        <span style="padding-left: 5px">
+          <i class="fas fa-search " aria-hidden="true"></i>
+        </span>
       </button>
     </div>
-    <div class="d-flex justify-content-center">
-      <div class="spinner-grow text-primary" role="status">
-        <span class="sr-only">Loading...</span>
+
+    <div v-if="spinner" class="spinCont">
+      <div class="d-flex justify-content-center">
+        <div class="spinner-grow text-primary" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
       </div>
     </div>
 
@@ -46,24 +52,31 @@ export default {
   data() {
     return {
       tracks: [],
-      search: ""
+      search: "",
+      spinner: false
     };
   },
   methods: {
     ...mapMutations(["BEARER_ID"]),
     async searchResults() {
+      this.spinner = true;
       const url = "http://localhost:5000/api";
       const response = await axios.post(url);
-      console.log(response);
 
       const session_url = `http://localhost:5000/api/search/${this.search}/${
         response.data
       }`;
       this.BEARER_ID(response.data);
-      console.log(session_url);
-      const searchResult = await axios.get(session_url);
-      this.tracks = searchResult.data.tracks.items;
-      console.log(searchResult.data.tracks.items);
+
+      await axios.get(session_url).then((res) => {
+          this.tracks = res.data.tracks.items;
+        setTimeout(() => {
+          this.spinner = false;
+        }, 1000);
+          console.log(res.data.tracks.items);
+      })
+
+
     }
   }
 };
@@ -94,5 +107,10 @@ export default {
   .card-deck .card {
     flex: 0 0 calc(20% - 30px);
   }
+}
+
+.spinCont {
+  padding-top: 50px;
+  padding-bottom: 50px;
 }
 </style>

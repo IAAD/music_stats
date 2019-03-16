@@ -15,8 +15,7 @@
             <mdb-card-body>
               <mdb-card-title>{{ track.name }}</mdb-card-title>
               <mdb-card-text
-                >Some quick example text to build on the card title and make up
-                the bulk of the card's content.</mdb-card-text
+                > Album: {{track.album.name}}</mdb-card-text
               >
 
               <mdb-btn
