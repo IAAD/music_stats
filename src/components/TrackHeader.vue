@@ -103,7 +103,13 @@ export default {
     return {
       images: []
     };
-  }
+  },
+    mounted() {
+      this.$root.$on('update', ()=>{
+          this.$forceUpdate();
+      })
+
+    }
 };
 </script>
 

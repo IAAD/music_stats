@@ -57,8 +57,7 @@ import { mdbContainer, mdbRow, mdbJumbotron, mdbCol } from "mdbvue";
 import VueApexCharts from "vue-apexcharts";
 import { mapState, mapMutations } from "vuex";
 import axios from "axios";
-import info from "../views/Info";
-
+import trackh from "./TrackHeader";
 
 export default {
   name: "SoundFeatures",
@@ -183,7 +182,7 @@ export default {
       const view = await this.viewInfo(id, artistId, albumId);
       console.log(view);
       if (view === true) {
-        info.$forceUpdate();
+        this.$root.$emit("update");
       }
     }
   },
