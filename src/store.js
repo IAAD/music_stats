@@ -7,6 +7,7 @@ export default new Vuex.Store({
   state: {
     trackId: "",
     artistId: "",
+    albumId: "",
     bearerId: "",
     countryData: [],
     chartCategories: [],
@@ -19,6 +20,9 @@ export default new Vuex.Store({
     },
     ARTIST_ID: (state, id) => {
       state.artistId = id;
+    },
+    ALBUM_ID: (state, id) => {
+      state.albumId = id;
     },
     CHANGE_DATA: (state, data) => {
       state.countryData = data;

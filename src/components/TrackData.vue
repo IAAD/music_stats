@@ -106,38 +106,38 @@
 </template>
 
 <script>
-// import {
-//   mdbContainer,
-//   mdbRow,
-//   mdbCol,
-//   mdbMask,
-//   mdbIcon,
-//   mdbView,
-//   mdbBtn,
-//   mdbJumbotron
-// } from "mdbvue";
-//
-// export default {
-//   name: "TrackData",
-//   components: {
-//     mdbContainer,
-//     mdbRow,
-//     mdbCol,
-//     mdbMask,
-//     mdbIcon,
-//     mdbView,
-//     mdbBtn,
-//     mdbJumbotron
-//   },
-//   props: ["trackhead", "artist"],
-//   methods: {
-//     millisToMins(millis) {
-//       let minutes = Math.floor(millis / 60000);
-//       let seconds = ((millis % 60000) / 1000).toFixed(0);
-//       return minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
-//     }
-//   }
-// };
+import {
+  mdbContainer,
+  mdbRow,
+  mdbCol,
+  mdbMask,
+  mdbIcon,
+  mdbView,
+  mdbBtn,
+  mdbJumbotron
+} from "mdbvue";
+
+export default {
+  name: "TrackData",
+  components: {
+    mdbContainer,
+    mdbRow,
+    mdbCol,
+    mdbMask,
+    mdbIcon,
+    mdbView,
+    mdbBtn,
+    mdbJumbotron
+  },
+  props: ["trackhead", "artist"],
+  methods: {
+    millisToMins(millis) {
+      let minutes = Math.floor(millis / 60000);
+      let seconds = ((millis % 60000) / 1000).toFixed(0);
+      return minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+    }
+  }
+};
 </script>
 
 <style scoped></style>

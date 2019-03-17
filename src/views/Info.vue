@@ -1,11 +1,30 @@
 <template>
   <div>
+    <mdb-navbar expand="large" dark class="green">
+      <!-- Navbar brand -->
+      <mdb-navbar-brand href="#">
+        Music Stats
+      </mdb-navbar-brand>
+      <mdb-navbar-toggler>
+        <mdb-navbar-nav>
+         <router-link to="/"><mdb-nav-item>Home</mdb-nav-item></router-link>
+        </mdb-navbar-nav>
+      </mdb-navbar-toggler>
+    </mdb-navbar>
     <TrackHeader v-bind:artist="artist" v-bind:trackhead="trackhead" />
     <div style="margin-top: 2rem"></div>
     <div class="pull-left align-left" style="width: 100%">
-      <mdb-btn color="success" size="lg"  style="float: left; margin-left: 6%" class=" -align-left pull-left" lg="2">
+        <router-link to="/">
+      <mdb-btn
+        color="success"
+        size="lg"
+        style="float: left; margin-left: 6%"
+        class=" -align-left pull-left"
+        lg="2"
+      >
         Back
       </mdb-btn>
+        </router-link>
     </div>
     <div style="margin-top: 7rem"></div>
 
@@ -73,7 +92,18 @@ import TrackHeader from "../components/TrackHeader.vue";
 import TrackData from "../components/TrackData.vue";
 import SoundFeatures from "../components/SoundFeatures.vue";
 import { mapState, mapMutations } from "vuex";
-import { mdbJumbotron, mdbRow, mdbContainer, mdbCol, mdbBtn } from "mdbvue";
+import {
+  mdbJumbotron,
+  mdbRow,
+  mdbContainer,
+  mdbCol,
+  mdbBtn,
+  mdbNavbar,
+  mdbNavbarBrand,
+  mdbNavbarToggler,
+  mdbNavItem,
+  mdbNavbarNav
+} from "mdbvue";
 import axios from "axios";
 import VueApexCharts from "vue-apexcharts";
 
@@ -88,6 +118,11 @@ export default {
     mdbJumbotron,
     mdbRow,
     mdbBtn,
+    mdbNavbarNav,
+    mdbNavItem,
+    mdbNavbarToggler,
+    mdbNavbarBrand,
+    mdbNavbar,
     apexchart: VueApexCharts
   },
   props: ["catData"],

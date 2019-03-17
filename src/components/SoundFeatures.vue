@@ -4,11 +4,14 @@
       <mdb-col lg="6">
         <mdb-jumbotron class="hoverable">
           <mdb-container>
-          <mdb-row v-for="albumData in album.data.items" v-bind:key="albumData.id">
+              <a v-for="albumData in album.data.items" v-bind:key="albumData.id"  v-on:click="beforeviewInfo(albumData.id, albumData.artists[0].id, albumID)">
+          <mdb-row >
             <mdb-jumbotron class="album">
-              <h5>{{albumData.name}}</h5>
+              <h5>{{albumData.name}}<span class="-align-right h5" style="text-align: right; float: right">  {{ millisToMins(albumData.duration_ms) }}</span>  </h5>
+
             </mdb-jumbotron>
           </mdb-row>
+              </a>
           </mdb-container>
         </mdb-jumbotron>
       </mdb-col>
@@ -39,7 +42,9 @@
 <script>
 import { mdbContainer, mdbRow, mdbJumbotron, mdbCol } from "mdbvue";
 import VueApexCharts from "vue-apexcharts";
-import { mapState } from "vuex";
+import { mapState, mapMutations } from "vuex";
+import axios from 'axios';
+import Vue from "vue";
 
 export default {
   name: "SoundFeatures",
@@ -51,7 +56,14 @@ export default {
     apexchart: VueApexCharts
   },
   computed: {
-    ...mapState(["features", "album"])
+    ...mapState([
+      "features",
+      "album",
+      "albumId",
+      "trackId",
+      "artistId",
+      "bearerId"
+    ])
   },
   data: function() {
     return {
@@ -96,10 +108,74 @@ export default {
           offsetY: 0,
           height: 230
         }
-      }
+      },
+        albumID : ""
     };
   },
-  mounted() {
+    methods: {
+      ...mapMutations([
+        "INSERT_ID",
+        "ARTIST_ID",
+        "CHANGE_DATA",
+        "CHART_CAT",
+        "PIE_DATA",
+        "ALBUM_DATA",
+        "ALBUM_ID"
+      ]),
+        millisToMins(millis) {
+            let minutes = Math.floor(millis / 60000);
+            let seconds = ((millis % 60000) / 1000).toFixed(0);
+            return minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
+        },
+      viewInfo: async function(id, artistId, albumId) {
+
+        this.INSERT_ID(id);
+        this.ARTIST_ID(artistId);
+        this.ALBUM_ID(albumId);
+        const countryCode = "US";
+        const trackArr = [];
+        const countryData_url = `http://localhost:5000/api/toptracks/${
+                this.artistId
+                }/
+      ${this.bearerId}/${countryCode}`;
+
+
+        const countryResult = await axios.get(countryData_url);
+        this.CHANGE_DATA(countryResult);
+        countryResult.data.tracks.forEach(track => {
+          trackArr.push(track.name.substring(0, 5));
+        });
+
+        this.catData = trackArr;
+        this.CHART_CAT(trackArr);
+
+        //get track features
+        const features_url = `http://localhost:5000/api/features/${id}/${this.bearerId}`;
+
+        const featuresResult = await axios.get(features_url);
+        this.PIE_DATA(featuresResult);
+
+        //get album details
+        const album_url = `http://localhost:5000/api/album/${albumId}/${
+                this.bearerId
+                }`;
+
+        const albumResult = await axios.get(album_url);
+        this.ALBUM_DATA(albumResult);
+
+        return true;
+      },
+      beforeviewInfo: async function(id, artistId, albumId) {
+        const view = await this.viewInfo(id, artistId, albumId);
+        console.log(view);
+        if (view === true) {
+          Vue.$forceUpdate();
+        }
+      }
+
+    },
+  created() {
+      this.albumID = this.$store.state.albumId;
     console.log(this.album)
   }
 };

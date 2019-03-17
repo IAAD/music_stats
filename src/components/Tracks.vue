@@ -76,12 +76,14 @@ export default {
       "CHANGE_DATA",
       "CHART_CAT",
       "PIE_DATA",
-      "ALBUM_DATA"
+      "ALBUM_DATA",
+        "ALBUM_ID"
     ]),
     viewInfo: async function(id, artistId, albumId) {
       this.track = id;
       this.INSERT_ID(this.track);
       this.ARTIST_ID(artistId);
+      this.ALBUM_ID(albumId);
       const countryCode = "US";
       const trackArr = [];
       const countryData_url = `http://localhost:5000/api/toptracks/${
