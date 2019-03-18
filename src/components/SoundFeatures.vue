@@ -29,8 +29,8 @@
           <mdb-container>
 
               <mdb-row>
-                <mdb-jumbotron class="album">
-                  <iframe src="https://open.spotify.com/embed/album/1DFixLWuPkv3KT3TnV35m3"
+                <mdb-jumbotron class="album2">
+                  <iframe :src="'https://open.spotify.com/embed/track/'+trackId"
                           width="100%" height="80" frameborder="0" allowtransparency="true"
                           allow="encrypted-media"></iframe>
                 </mdb-jumbotron>
@@ -68,7 +68,7 @@ import { mdbContainer, mdbRow, mdbJumbotron, mdbCol } from "mdbvue";
 import VueApexCharts from "vue-apexcharts";
 import { mapState, mapMutations } from "vuex";
 import axios from "axios";
-import trackh from "./TrackHeader";
+
 
 export default {
   name: "SoundFeatures",
@@ -79,6 +79,7 @@ export default {
     mdbCol,
     apexchart: VueApexCharts
   },
+  props: ["trackurl"],
   computed: {
     ...mapState([
       "features",
@@ -212,5 +213,12 @@ export default {
   margin-top: 7px;
   width: 100%;
   text-align: left;
+}
+.album2 {
+  padding-top: 0px;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+  margin-top: 0px;
+  width: 100%;
 }
 </style>

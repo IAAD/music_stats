@@ -83,7 +83,7 @@
       </mdb-row>
     </mdb-container>
     <div style="margin-top: 5rem"></div>
-    <SoundFeatures />
+    <SoundFeatures v-bind:trackurl="trackurl"/>
   </div>
 </template>
 
@@ -156,6 +156,7 @@ export default {
         }
       },
       trackhead: [],
+        trackurl: "",
       artist: [],
       bearerToken: "",
       countryDataProp: [],
@@ -182,6 +183,8 @@ export default {
 
       const trackResult = await axios.get(session_url);
       this.trackhead = trackResult;
+
+      this.trackurl = trackResult.data.external_urls.spotify;
 
       //get artist data
       const artistId = trackResult.data.artists[0].id;
