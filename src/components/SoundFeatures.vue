@@ -26,6 +26,17 @@
               </mdb-row>
             </a>
           </mdb-container>
+          <mdb-container>
+
+              <mdb-row>
+                <mdb-jumbotron class="album">
+                  <iframe src="https://open.spotify.com/embed/album/1DFixLWuPkv3KT3TnV35m3"
+                          width="100%" height="80" frameborder="0" allowtransparency="true"
+                          allow="encrypted-media"></iframe>
+                </mdb-jumbotron>
+              </mdb-row>
+          </mdb-container>
+
         </mdb-jumbotron>
       </mdb-col>
       <mdb-col lg="6" class="-align-center">
