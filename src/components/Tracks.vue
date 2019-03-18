@@ -95,7 +95,7 @@ export default {
       const countryResult = await axios.get(countryData_url);
       this.CHANGE_DATA(countryResult);
       countryResult.data.tracks.forEach(track => {
-        trackArr.push(track.name.substring(0, 5));
+        trackArr.push(track.name);
       });
 
       this.catData = trackArr;

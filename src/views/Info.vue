@@ -77,7 +77,7 @@
                 <div id="chart">
                   <apexchart
                     type="bar"
-                    height="350"
+                    height="450"
                     :options="chartOptions"
                     :series="series"
                   />
@@ -90,6 +90,9 @@
     </mdb-container>
     <div style="margin-top: 5rem"></div>
     <SoundFeatures v-bind:trackurl="trackurl"/>
+    <h4 class="mb-3 p-0" style="width: 100%">
+      <strong class="font-weight-bold">All data is from Spotify</strong>
+    </h4>
   </div>
 </template>
 
