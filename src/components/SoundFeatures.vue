@@ -2,8 +2,15 @@
   <mdb-container>
     <mdb-row>
       <mdb-col lg="6">
+
         <mdb-jumbotron class="hoverable">
           <mdb-container>
+            <h4 class="mb-3 p-0" style="width: 100%">
+              <strong class="font-weight-bold" style="color: #ff9800">Album Tracks</strong>
+            </h4>
+            <p class="mb-3 p-0" style="width: 100%">
+              Play tracks contained in this album. Click an album track to play.
+            </p>
             <a
               v-for="albumData in album.data.items"
               v-bind:key="albumData.id"
@@ -40,9 +47,16 @@
         </mdb-jumbotron>
       </mdb-col>
       <mdb-col lg="6" class="-align-center">
+
         <mdb-jumbotron class="hoverable center-block">
           <mdb-row>
             <mdb-container>
+              <h4 class="mb-3 p-0" style="width: 100%">
+                <strong class="font-weight-bold " style="color: #ff9800">Audio Analysis</strong>
+              </h4>
+              <p class="mb-3 p-0" style="width: 100%">
+                This are analysis scores given to this track by a machine learning algorithm.
+              </p>
               <div id="app">
                 <div class="chart-wrap">
                   <div id="chart">

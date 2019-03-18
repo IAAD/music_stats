@@ -11,8 +11,9 @@
         aria-label="Search"
       />
       <button
-        class="input-group-append btn btn-primary"
+        class="input-group-append btn "
         v-on:click="searchResults"
+        style="background: #ff9800"
       >
         Search
         <span style="padding-left: 5px">

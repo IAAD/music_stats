@@ -16,8 +16,9 @@
       <mdb-row>
         <mdb-mask waves overlay="white-slight"></mdb-mask>
         <mdb-card-body class="text-center" cascade>
-          <mdb-card-title
-            ><strong class="indigo-text">
+          <mdb-card-title style="color: #ff9800"
+            >     <mdb-icon icon="music" class="pr-2" />
+            <strong class="" >
               {{ trackhead.data.name }}</strong
             ></mdb-card-title
           >

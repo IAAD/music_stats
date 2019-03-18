@@ -2,9 +2,12 @@
   <mdb-container>
     <mdb-row>
       <mdb-col lg="6">
-        <mdb-jumbotron class="hoverable">
+        <mdb-jumbotron class="hoverable" style="padding-top: 2rem">
           <mdb-row>
             <mdb-col lg="4">
+              <h4 class="mb-3 p-0">
+                <strong class="font-weight-bold ">Track</strong>
+              </h4>
               <mdb-view class="rounded z-depth-2 mb-lg-0 mb-4" hover>
                 <img
                   class="img-fluid"
@@ -17,12 +20,13 @@
               </mdb-view>
             </mdb-col>
             <mdb-col lg="8" class="-align-left">
-              <a class="green-text">
-                <h3 class="font-weight-bold mb-3">
-                  <mdb-icon icon="chart" class="pr-2" />{{
+
+              <a class="" style="color: #ff9800">
+                <h4 class="font-weight-bold mb-3">
+                  <mdb-icon icon="chart-line" class="pr-2" />{{
                     trackhead.data.name
                   }}
-                </h3>
+                </h4>
               </a>
               <h5 class="mb-3 p-0">
                 <strong class="font-weight-bold ">Popularity Index: </strong>
@@ -49,17 +53,18 @@
                   {{ artist.name }},
                 </span>
               </h5>
-              <mdb-btn color="success" size="md" class="waves-light"
-                >Read more</mdb-btn
-              >
+
             </mdb-col>
           </mdb-row>
         </mdb-jumbotron>
       </mdb-col>
       <mdb-col lg="6">
-        <mdb-jumbotron class="hoverable">
+        <mdb-jumbotron class="hoverable" style="padding-top: 2rem">
           <mdb-row>
             <mdb-col lg="4">
+              <h4 class="mb-3 p-0">
+                <strong class="font-weight-bold ">Main Artist</strong>
+              </h4>
               <mdb-view class="rounded z-depth-2 mb-lg-0 mb-4" hover>
                 <img
                   class="img-fluid"
@@ -72,10 +77,10 @@
               </mdb-view>
             </mdb-col>
             <mdb-col lg="8" class="-align-left">
-              <a class="green-text">
-                <h3 class="font-weight-bold mb-3">
-                  <mdb-icon icon="chart" class="pr-2" />{{ artist.data.name }}
-                </h3>
+              <a class="" style="color: #ff9800">
+                <h4 class="font-weight-bold mb-3">
+                  <mdb-icon icon="user-circle" class="pr-2" />{{ artist.data.name }}
+                </h4>
               </a>
               <h5 class="mb-3 p-0">
                 <strong class="font-weight-bold ">Artist Popularity : </strong>
@@ -94,9 +99,6 @@
                   {{ genre }},
                 </span>
               </h5>
-              <mdb-btn color="success" size="md" class="waves-light"
-                >Read more</mdb-btn
-              >
             </mdb-col>
           </mdb-row>
         </mdb-jumbotron>

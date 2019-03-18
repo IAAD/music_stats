@@ -1,6 +1,6 @@
 <template>
   <div>
-    <mdb-navbar expand="large" dark class="green">
+    <mdb-navbar expand="large" dark class="" style="background: #ff9800;">
       <!-- Navbar brand -->
       <mdb-navbar-brand href="#">
         Music Stats
@@ -16,9 +16,9 @@
     <div class="pull-left align-left" style="width: 100%">
         <router-link to="/">
       <mdb-btn
-        color="success"
+
         size="lg"
-        style="float: left; margin-left: 6%"
+        style="float: left; margin-left: 6%; background: #ff9800"
         class=" -align-left pull-left"
         lg="2"
       >
@@ -32,9 +32,15 @@
     <div style="margin-top: 5rem"></div>
     <mdb-container>
       <mdb-row>
-        <mdb-col class="-align-center">
-          <mdb-jumbotron class="hoverable center-block">
-            <mdb-row>
+        <mdb-col >
+          <mdb-jumbotron class="hoverable">
+            <mdb-row >
+              <h4 class="mb-3 p-0" style="width: 100%">
+                <strong class="font-weight-bold" style="color: #ff9800">Artist Top Tracks</strong>
+              </h4>
+              <p class="mb-3 p-0" style="width: 100%">
+                This is the popularity of artists top 10 tracks in the selected country, select a different country to collect information for that country.
+              </p>
               <select
                 class="browser-default custom-select"
                 v-on:change="selectCountry($event)"
@@ -146,6 +152,7 @@ export default {
         plotOptions: {
           bar: {
             vertical: true
+
           }
         },
         dataLabels: {
@@ -153,7 +160,8 @@ export default {
         },
         xaxis: {
           categories: this.$store.state.chartCategories
-        }
+        },
+        colors: ['#ff9800']
       },
       trackhead: [],
         trackurl: "",
