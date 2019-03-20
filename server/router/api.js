@@ -5,6 +5,7 @@ router.get("/", (req, res) => {
   res.send("hello");
 });
 
+//Api Authentication
 router.post("/", (req, res) => {
   var request = require("request"); // "Request" library
 
@@ -34,6 +35,7 @@ router.post("/", (req, res) => {
   });
 });
 
+//Api search of query parameters
 router.get("/search/:query/:token", async (req, res) => {
   var request = require("request"); // "Request" library
 
@@ -57,6 +59,7 @@ router.get("/search/:query/:token", async (req, res) => {
   });
 });
 
+//Api retrieving information of a particular track
 router.get("/track/:id/:token", async (req, res) => {
   var request = require("request"); // "Request" library
 
@@ -80,6 +83,7 @@ router.get("/track/:id/:token", async (req, res) => {
   });
 });
 
+//Api retrieving a particular artist
 router.get("/artist/:id/:token", async (req, res) => {
   var request = require("request"); // "Request" library
 
@@ -103,6 +107,7 @@ router.get("/artist/:id/:token", async (req, res) => {
   });
 });
 
+//Api retrieving machine learning analysis of a track
 router.get("/analysis/:id/:token", async (req, res) => {
   var request = require("request"); // "Request" library
 
@@ -126,6 +131,7 @@ router.get("/analysis/:id/:token", async (req, res) => {
   });
 });
 
+//Api retrieving features of a track
 router.get("/features/:id/:token", async (req, res) => {
   var request = require("request"); // "Request" library
 
