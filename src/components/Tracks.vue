@@ -86,7 +86,7 @@ export default {
       this.ALBUM_ID(albumId);
       const countryCode = "US";
       const trackArr = [];
-      const countryData_url = `http://localhost:5000/api/toptracks/${
+      const countryData_url = `api/toptracks/${
         this.artistId
       }/
       ${this.bearerId}/${countryCode}`;
@@ -102,13 +102,13 @@ export default {
       this.CHART_CAT(trackArr);
 
       //get track features
-      const features_url = `http://localhost:5000/api/features/${id}/${this.bearerId}`;
+      const features_url = `api/features/${id}/${this.bearerId}`;
 
       const featuresResult = await axios.get(features_url);
       this.PIE_DATA(featuresResult);
 
       //get album details
-      const album_url = `http://localhost:5000/api/album/${albumId}/${
+      const album_url = `api/album/${albumId}/${
         this.bearerId
       }`;
 

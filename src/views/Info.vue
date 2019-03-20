@@ -185,12 +185,12 @@ export default {
     async trackResults(id) {
       //get bearer tokken
 
-      const url = "http://localhost:5000/api";
+      const url = "api";
       const response = await axios.post(url);
       const token = response.data;
       this.bearerToken = token;
 
-      const session_url = `http://localhost:5000/api/track/${id}/${token}`;
+      const session_url = `api/track/${id}/${token}`;
 
       const trackResult = await axios.get(session_url);
       this.trackhead = trackResult;
@@ -199,14 +199,14 @@ export default {
 
       //get artist data
       const artistId = trackResult.data.artists[0].id;
-      const artist_url = `http://localhost:5000/api/artist/${artistId}/${token}`;
+      const artist_url = `api/artist/${artistId}/${token}`;
 
       const artistResult = await axios.get(artist_url);
       this.artist = artistResult;
       //get charts data
       //get artist country data
       const countryCode = "US";
-      const countryData_url = `http://localhost:5000/api/toptracks/${artistId}/
+      const countryData_url = `api/toptracks/${artistId}/
       ${this.bearerToken}/${countryCode}`;
 
       const countryResult = await axios.get(countryData_url);
@@ -220,7 +220,7 @@ export default {
     async selectCountry(event) {
       //get artist country data
       const artistId = this.trackhead.data.artists[0].id;
-      const artist_url = `http://localhost:5000/api/toptracks/${artistId}/
+      const artist_url = `api/toptracks/${artistId}/
       ${this.bearerToken}/${event.target.value}`;
 
       const countryResult = await axios.get(artist_url);

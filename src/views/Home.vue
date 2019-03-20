@@ -61,10 +61,10 @@ export default {
     ...mapMutations(["BEARER_ID"]),
     async searchResults() {
       this.spinner = true;
-      const url = "http://localhost:5000/api";
+      const url = "api";
       const response = await axios.post(url);
 
-      const session_url = `http://localhost:5000/api/search/${this.search}/${
+      const session_url = `api/search/${this.search}/${
         response.data
       }`;
       this.BEARER_ID(response.data);
